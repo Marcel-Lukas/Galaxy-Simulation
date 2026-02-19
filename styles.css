@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #000000;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url(./public/background.webp) no-repeat;
+  background-size: cover;
+  z-index: 0;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+canvas {
+    display: block;
+}
+
+.hud-btn {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: 24px;
+  width: 24px;
+  border: none;
+  background-color: rgba(14, 119, 255, 0.9);
+  cursor: pointer;
+  transition: all 222ms ease-in-out;
+  font-size: 20px;
+  z-index: 222;
+  touch-action: manipulation;
+}
+
+@media (pointer: fine) {
+  .hud-btn:hover {
+    scale: 1.15;
+    filter: drop-shadow(0px 0px 10px rgb(255, 255, 255));
+  }
+}
+
+.hud-btn:active {
+  scale: 1.15;
+  filter: drop-shadow(0px 0px 10px rgb(255, 255, 255));
+}
+
+#info {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(55, 96, 119, 0.5);
+    padding: 15px 18px;
+    border-radius: 36px 12px 60px 12px;
+    font-size: 14px;
+    line-height: 1.2;
+    cursor: default;
+    z-index: 100;
+    border: 1px solid rgba(100, 149, 255, 0.5);
+    color: #ffffff;
+}
+
+#info h1 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #88bbff;
+    text-shadow: 0 0 10px rgba(136, 187, 255, 0.7);
+}
+
+#fps {
+    color: rgba(0, 255, 136, 0.85);
+    font-weight: bold;
+}
+
+#star-count {
+    color: #6da2e7;
+    font-weight: bold;
+}
+
+.hint {
+    max-width: 220px;
+    margin-top: 10px;
+    font-size: 13px;
+    text-align: justify;
+}
+
+.btn-con {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.status {
+  width: 60px;
+  margin-left: 6px;
+  font-size: 16px;
+}
+
+.control-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: solid 1px #ffffff;
+  background-color: rgba(136, 188, 255, 0.9);
+  cursor: pointer;
+  transition: all 222ms ease-in-out;
+  color: #0c0849;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  touch-action: manipulation;
+}
+
+@media (pointer: fine) {
+  .control-btn:hover {
+    scale: 1.06;
+    filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.7));
+  }
+}
+
+.control-btn:active {
+    scale: 1.06;
+    filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.7));
+}
+
+
+@media (max-width: 1000px) {
+  .tp-dfwv {
+    display: none;
+  }
+  .hud {
+    display: none;
+  }
+}

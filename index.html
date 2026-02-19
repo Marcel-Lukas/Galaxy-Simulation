@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Simulation</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <button class="hud-btn" id="btn-galaxy">🌌</button>
+    <div class="hud" id="info">
+        <h1>Galaxy Simulation</h1>
+        <div>FPS: <span id="fps"></span></div>
+        <div>Stars: <span id="star-count"></span></div>
+        <div class="hint">
+            Drag the mouse to interact with 
+            the galaxy and use the Galaxy controls
+            on the right side.
+        </div>
+        <div class="btn-con">
+          <button class="control-btn" id="btn-controls">Controls</button>
+          <div class="status">-OFF</div>
+        </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
