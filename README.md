@@ -5,7 +5,7 @@ A galaxy simulation using WebGPU, Three.js, and TSL (Three.js Shading Language).
 
 ## Live Demo
 
-Visit: `https://galaxy-simulation.marcel-lukas.com`
+Visit: <https://galaxy-simulation.marcel-lukas.com>
 
 ## Technologies
 
