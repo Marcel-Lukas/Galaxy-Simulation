@@ -12,17 +12,6 @@ body {
     overflow: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url(./public/background.webp) no-repeat;
-  background-size: cover;
-  z-index: 0;
-  opacity: 0.1;
-  pointer-events: none;
-}
-
 canvas {
     display: block;
 }
@@ -44,7 +33,7 @@ canvas {
 
 @media (pointer: fine) {
   .hud-btn:hover {
-    scale: 1.15;
+    scale: 1.2;
     filter: drop-shadow(0px 0px 10px rgb(255, 255, 255));
   }
 }
@@ -60,7 +49,7 @@ canvas {
     left: 14px;
     background: rgba(55, 96, 119, 0.5);
     padding: 15px 18px;
-    border-radius: 36px 12px 60px 12px;
+    border-radius: 36px 10px 36px 10px;
     font-size: 14px;
     line-height: 1.2;
     cursor: default;
@@ -73,7 +62,7 @@ canvas {
     font-size: 20px;
     margin-bottom: 8px;
     color: #88bbff;
-    text-shadow: 0 0 10px rgba(136, 187, 255, 0.7);
+    text-shadow: 1px 1px 10px rgba(136, 187, 255, 0.7);
 }
 
 #fps {
@@ -96,24 +85,20 @@ canvas {
 .btn-con {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 10px;
 }
 
-.status {
-  width: 60px;
-  margin-left: 6px;
-  font-size: 16px;
-}
 
-.control-btn {
-  padding: 6px 10px;
+.control-btn, #btn-skybox {
+  display: flex;
+  padding: 6px 8px;
   border-radius: 8px;
-  border: solid 1px #ffffff;
-  background-color: rgba(136, 188, 255, 0.9);
+  border: solid 1px #afcbf1;
+  background-color: rgb(13, 12, 46);
   cursor: pointer;
   transition: all 222ms ease-in-out;
-  color: #0c0849;
+  color: #afcbf1;
   font-size: 14px;
   font-family: inherit;
   font-weight: 600;
@@ -121,15 +106,19 @@ canvas {
 }
 
 @media (pointer: fine) {
-  .control-btn:hover {
+  .control-btn:hover, #btn-skybox:hover {
     scale: 1.06;
+    color: #ffffff;
+    border: solid 1px #ffffff;
     filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.7));
   }
 }
 
-.control-btn:active {
-    scale: 1.06;
-    filter: drop-shadow(0px 0px 6px rgba(255, 255, 255, 0.7));
+.control-btn:active, #btn-skybox:active {
+    scale: 1.04;
+    color: #ffffff;
+    border: solid 1px #ffffff;
+    filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.7));
 }
 
 
