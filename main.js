@@ -43,30 +43,38 @@ const scene = new THREE.Scene();
 
 const skyboxes = {
   default: [
-    './skybox/skybox_front.png',
-    './skybox/skybox_back.png',
-    './skybox/skybox_up.png',
-    './skybox/skybox_down.png',
-    './skybox/skybox_right.png',
-    './skybox/skybox_left.png',
+    './skybox/skybox_front.webp', // +X
+    './skybox/skybox_back.webp',  // -X
+    './skybox/skybox_up.webp',    // +Y
+    './skybox/skybox_down.webp',  // -Y
+    './skybox/skybox_right.webp', // +Z
+    './skybox/skybox_left.webp',  // -Z
   ],
   darkSpace: [
-    './skybox/space_ft.png',
-    './skybox/space_bk.png',
-    './skybox/space_up.png',
-    './skybox/space_dn.png',
-    './skybox/space_rt.png',
-    './skybox/space_lf.png',
+    './skybox/space_ft.webp',
+    './skybox/space_bk.webp',
+    './skybox/space_up.webp',
+    './skybox/space_dn.webp',
+    './skybox/space_rt.webp',
+    './skybox/space_lf.webp',
+  ],
+  asteroids: [
+    './skybox/asteroids_ft.webp',
+    './skybox/asteroids_bk.webp',
+    './skybox/asteroids_up.webp',
+    './skybox/asteroids_dn.webp',
+    './skybox/asteroids_rt.webp',
+    './skybox/asteroids_lf.webp',
   ],
   nebula: [
-    './skybox/nebulae_ft.jpg',
-    './skybox/nebulae_bk.jpg',
-    './skybox/nebulae_up.jpg',
-    './skybox/nebulae_dn.jpg',
-    './skybox/nebulae_rt.jpg',
-    './skybox/nebulae_lf.jpg',
+    './skybox/nebulae_ft.webp',
+    './skybox/nebulae_bk.webp',
+    './skybox/nebulae_up.webp',
+    './skybox/nebulae_dn.webp',
+    './skybox/nebulae_rt.webp',
+    './skybox/nebulae_lf.webp',
   ],
-
+  
 };
 
 const cubeLoader = new THREE.CubeTextureLoader();
