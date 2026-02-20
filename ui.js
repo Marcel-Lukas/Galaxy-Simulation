@@ -279,7 +279,7 @@ export class GalaxyUI {
    */
   initButtons() {
     this.infoHud = document.getElementById('info');
-
+    this.controlPanel = document.querySelector('.tp-dfwv');
     this.infoHudBtn = document.getElementById('btn-galaxy');
     this.controlsBtn = document.getElementById('btn-controls');
     this.skyboxBtn = document.getElementById('btn-skybox');
@@ -307,6 +307,8 @@ export class GalaxyUI {
 
     const currentDisplay = window.getComputedStyle(this.infoHud).display;
     this.infoHud.style.display =
+      currentDisplay === 'none' ? 'block' : 'none';
+    this.controlPanel.style.display =
       currentDisplay === 'none' ? 'block' : 'none';
   }
 

@@ -130,3 +130,11 @@ canvas {
     display: none;
   }
 }
+
+@media (max-width: 555px) {
+  .tp-dfwv {
+    margin-top: 220px;
+    margin-left: 14px;
+    left: 0;
+  }
+}
