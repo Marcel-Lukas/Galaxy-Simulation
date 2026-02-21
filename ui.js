@@ -37,7 +37,7 @@ export class GalaxyUI {
     this.bloomPassNode = null;
 
     /**
-     * Performance-Werte für Anzeige (z. B. FPS)
+     * Performance-Werte für Anzeige
      */
     this.perfParams = { fps: 60 };
 
@@ -69,12 +69,12 @@ export class GalaxyUI {
    * Steuert, welche UI-Bereiche aktiv sind
    */
   setupUI() {
-    // this.setupPerformanceFolder(); //todo
+    this.setupPerformanceFolder();
+    this.setupMouseFolder();
+    this.setupCloudsFolder();
     this.setupAppearanceFolder();
-    // this.setupCloudsFolder();      //todo
-    // this.setupBloomFolder();       //todo
+    this.setupBloomFolder();
     this.setupGalaxyFolder();
-    // this.setupMouseFolder();       //todo
   }
 
   /**
@@ -89,12 +89,66 @@ export class GalaxyUI {
     });
 
     perfFolder.addBinding(this.config, 'starCount', {
-      min: 1000,
+      min: 100_000,
       max: 1_000_000,
-      step: 1000,
+      step: 50_000,
       label: 'Star Count'
+    }).on('change', (ev) => {
+      // WebGL2 fallback (Transform Feedback) is fragile when resizing GPU buffers at runtime.
+      // Apply starCount only on the FINAL interaction event (mouse release / input commit).
+      if (ev?.last) {
+        this.callbacks.onStarCountChange(ev.value);
+      }
+    });
+  }
+
+  /**
+   *  Mouse Settings
+   */
+  setupMouseFolder() {
+    const appearanceFolder = this.pane.addFolder({ title: 'Mouse' });
+
+    appearanceFolder.addBinding(this.config, 'mouseForce', {
+      min: 0,
+      max: 100,
+      step: 0.1,
+      label: 'Force'
     }).on('change', () =>
-      this.callbacks.onStarCountChange(this.config.starCount)
+      this.callbacks.onUniformChange('mouseForce', this.config.mouseForce)
+    );
+
+    appearanceFolder.addBinding(this.config, 'mouseRadius', {
+      min: 0,
+      max: 50,
+      step: 0.1,
+      label: 'Radius'
+    }).on('change', () =>
+      this.callbacks.onUniformChange('mouseRadius', this.config.mouseRadius)
+    );
+  }
+
+  /**
+   * Clouds-Einstellungen
+   */
+  setupCloudsFolder() {
+    const cloudsFolder = this.pane.addFolder({ title: 'Clouds' });
+
+    cloudsFolder.addBinding(this.config, 'cloudSize', {
+      min: 0.0,
+      max: 4.0,
+      step: 0.01,
+      label: 'Size'
+    }).on('change', () =>
+      this.callbacks.onUniformChange('cloudSize', this.config.cloudSize)
+    );
+
+    cloudsFolder.addBinding(this.config, 'cloudOpacity', {
+      min: 0.0,
+      max: 0.1,
+      step: 0.001,
+      label: 'Strength'
+    }).on('change', () =>
+      this.callbacks.onUniformChange('cloudOpacity', this.config.cloudOpacity)
     );
   }
 
@@ -105,8 +159,8 @@ export class GalaxyUI {
     const appearanceFolder = this.pane.addFolder({ title: 'Appearance' });
 
     appearanceFolder.addBinding(this.config, 'particleSize', {
-      min: 0.05,
-      max: 0.5,
+      min: 0.02,
+      max: 0.15,
       step: 0.01,
       label: 'Star Size'
     }).on('change', () =>
@@ -114,8 +168,8 @@ export class GalaxyUI {
     );
 
     appearanceFolder.addBinding(this.config, 'starBrightness', {
-      min: 0.0,
-      max: 2.0,
+      min: 0.1,
+      max: 1.0,
       step: 0.01,
       label: 'Star Brightness'
     }).on('change', () =>
@@ -138,75 +192,25 @@ export class GalaxyUI {
   }
 
   /**
-   * Clouds-Einstellungen (aktuell optional)
-   */
-  setupCloudsFolder() {
-    const cloudsFolder = this.pane.addFolder({ title: 'Clouds' });
-
-    cloudsFolder.addBinding(this.config, 'cloudCount', {
-      min: 0,
-      max: 100000,
-      step: 1000,
-      label: 'Count'
-    }).on('change', () =>
-      this.callbacks.onCloudCountChange(this.config.cloudCount)
-    );
-
-    cloudsFolder.addBinding(this.config, 'cloudSize', {
-      min: 0.5,
-      max: 10.0,
-      step: 0.01,
-      label: 'Size'
-    }).on('change', () =>
-      this.callbacks.onUniformChange('cloudSize', this.config.cloudSize)
-    );
-
-    cloudsFolder.addBinding(this.config, 'cloudOpacity', {
-      min: 0.0,
-      max: 1.0,
-      step: 0.01,
-      label: 'Opacity'
-    }).on('change', () =>
-      this.callbacks.onUniformChange('cloudOpacity', this.config.cloudOpacity)
-    );
-
-    cloudsFolder.addBinding(this.config, 'cloudTintColor', {
-      label: 'Tint Color',
-      view: 'color'
-    }).on('change', () =>
-      this.callbacks.onCloudTintChange(this.config.cloudTintColor)
-    );
-  }
-
-  /**
-   * Bloom-Postprocessing (optional)
+   * Bloom-Postprocessing
    */
   setupBloomFolder() {
     const bloomFolder = this.pane.addFolder({ title: 'Bloom' });
 
     bloomFolder.addBinding(this.config, 'bloomStrength', {
       min: 0,
-      max: 3,
-      step: 0.01,
+      max: 1,
+      step: 0.005,
       label: 'Strength'
     }).on('change', () =>
       this.callbacks.onBloomChange('strength', this.config.bloomStrength)
-    );
-
-    bloomFolder.addBinding(this.config, 'bloomRadius', {
-      min: 0,
-      max: 1,
-      step: 0.01,
-      label: 'Radius'
-    }).on('change', () =>
-      this.callbacks.onBloomChange('radius', this.config.bloomRadius)
     );
 
     bloomFolder.addBinding(this.config, 'bloomThreshold', {
       min: 0,
       max: 1,
       step: 0.01,
-      label: 'Threshold'
+      label: 'Cutoff'
     }).on('change', () =>
       this.callbacks.onBloomChange('threshold', this.config.bloomThreshold)
     );
@@ -216,21 +220,21 @@ export class GalaxyUI {
    * Galaxie-Struktur (Regeneration notwendig)
    */
   setupGalaxyFolder() {
-    const galaxyFolder = this.pane.addFolder({ title: 'Galaxy Structure' });
+    const galaxyFolder = this.pane.addFolder({ title: 'Structure' });
 
     galaxyFolder.addBinding(this.config, 'rotationSpeed', {
       min: 0,
-      max: 2,
-      step: 0.01,
+      max: 6,
+      step: 0.005,
       label: 'Rotation Speed'
     }).on('change', () =>
       this.callbacks.onUniformChange('rotationSpeed', this.config.rotationSpeed)
     );
 
     galaxyFolder.addBinding(this.config, 'spiralTightness', {
-      min: 0,
-      max: 10,
-      step: 0.01,
+      min: 0.35,
+      max: 2.5,
+      step: 0.005,
       label: 'Spiral Tightness'
     }).on('change', () => this.callbacks.onRegenerate());
 
@@ -242,14 +246,14 @@ export class GalaxyUI {
     }).on('change', () => this.callbacks.onRegenerate());
 
     galaxyFolder.addBinding(this.config, 'armWidth', {
-      min: 1,
+      min: 0.5,
       max: 5,
-      step: 0.01,
+      step: 0.005,
       label: 'Arm Width'
     }).on('change', () => this.callbacks.onRegenerate());
 
     galaxyFolder.addBinding(this.config, 'randomness', {
-      min: 0,
+      min: 1,
       max: 5,
       step: 0.01,
       label: 'Randomness'
@@ -263,7 +267,7 @@ export class GalaxyUI {
     }).on('change', () => this.callbacks.onRegenerate());
 
     galaxyFolder.addBinding(this.config, 'galaxyThickness', {
-      min: 0.1,
+      min: 1,
       max: 10,
       step: 0.01,
       label: 'Thickness'
@@ -283,8 +287,6 @@ export class GalaxyUI {
     this.infoHudBtn = document.getElementById('btn-galaxy');
     this.controlsBtn = document.getElementById('btn-controls');
     this.skyboxBtn = document.getElementById('btn-skybox');
-
-    // Anzeige für die aktuelle Skybox-Nummer
     this.skyboxLabel = document.querySelector('.skybox');
 
     if (this.infoHudBtn) {
@@ -298,7 +300,7 @@ export class GalaxyUI {
     if (this.skyboxBtn) {
       this.skyboxBtn.addEventListener('click', () => this.cycleSkybox());
     }
-    // Initiale Skybox-Nummer anzeigen
+
     this.updateSkyboxLabel();
   }
 
@@ -326,7 +328,6 @@ export class GalaxyUI {
       if (statusLabel) statusLabel.textContent = 'ON';
     }
   }
-
 
 
   /* ===========================
@@ -371,5 +372,4 @@ export class GalaxyUI {
     this.bloomPassNode = bloomNode;
   }
 }
-
 

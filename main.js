@@ -7,16 +7,16 @@ import { GalaxyUI } from './ui.js';
 
 // Configuration
 const config = {
-  starCount: 750000,
+  starCount: 500000,
   rotationSpeed: 0.12,
   spiralTightness: 1.5,
-  mouseForce: 10.0,
-  mouseRadius: 14.0,
+  mouseForce: 6.0,
+  mouseRadius: 5.0,
   galaxyRadius: 13.0,
   galaxyThickness: 6,
   armCount: 2,
   armWidth: 2.25,
-  randomness: 1.8,
+  randomness: 1.85,
   particleSize: 0.04,
   starBrightness: 0.3,
   denseStarColor: '#1885ff',
@@ -25,13 +25,27 @@ const config = {
   bloomRadius: 0.2,
   bloomThreshold: 0.1,
   cloudCount: 5000,
-  cloudSize: 3,
-  cloudOpacity: 0.02,
+  cloudSize: 2.2,
+  cloudOpacity: 0.01,
   cloudTintColor: '#ffdace',
   skybox: 'default'
 };
 
-let backgroundStars = 10000;
+// Persisted settings (safe approach for WebGL2 fallback):
+// If WebGPU is unavailable, resizing GPU buffers at runtime can break Transform Feedback.
+// We therefore store starCount in localStorage and reload the page to apply it.
+const STARCOUNT_STORAGE_KEY = 'galaxy.starCount';
+{
+  const raw = sessionStorage.getItem(STARCOUNT_STORAGE_KEY);
+  const parsed = raw != null ? Number(raw) : NaN;
+  if (Number.isFinite(parsed)) {
+    // keep within UI limits and align with step=1000
+    const clamped = Math.min(1_000_000, Math.max(1000, Math.round(parsed / 1000) * 1000));
+    config.starCount = clamped;
+  }
+}
+
+let backgroundStars = 7777;
 
 // --- Scene Setup ---
 const scene = new THREE.Scene();
@@ -238,8 +252,16 @@ const ui = new GalaxyUI(config, {
     if (bloomPassNode) bloomPassNode[property].value = value;
   },
   onStarCountChange: (newCount) => {
-    galaxySimulation.updateStarCount(newCount);
-    document.getElementById('star-count').textContent = newCount.toLocaleString();
+    // Safe approach for WebGL2 fallback: persist and reload instead of resizing TF buffers live.
+    const next = Math.min(1_000_000, Math.max(1000, Math.round(Number(newCount) / 1000) * 1000));
+    sessionStorage.setItem(STARCOUNT_STORAGE_KEY, String(next));
+
+    // Optional: update UI text immediately (before reload)
+    document.getElementById('star-count').textContent = next.toLocaleString();
+
+    // Reload to apply the new starCount cleanly.
+    // Using location.reload() keeps the same URL and avoids cache issues.
+    location.reload();
   },
   onCloudCountChange: (newCount) => {
     galaxySimulation.updateUniforms({ cloudCount: newCount });
