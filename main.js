@@ -293,6 +293,16 @@ const ui = new GalaxyUI(config, {
   }
 });
 
+// --- FPS Boost Reduce Stars Btn ---
+const reduceStars = document.getElementById('fps-boost');
+if (reduceStars) {
+  reduceStars.addEventListener('click', () => {
+    const newGalaxyStarCount = 100_000;
+    sessionStorage.setItem(STARCOUNT_STORAGE_KEY, String(newGalaxyStarCount));
+    location.reload();
+  });
+}
+
 
 /* ===========================
    FPS COUNTER

@@ -288,6 +288,7 @@ export class GalaxyUI {
     this.controlsBtn = document.getElementById('btn-controls');
     this.skyboxBtn = document.getElementById('btn-skybox');
     this.skyboxLabel = document.querySelector('.skybox');
+    this.fullscreenBtn = document.getElementById('btn-fullscreen');
 
     if (this.infoHudBtn) {
       this.infoHudBtn.addEventListener('click', () => this.toggleInfoHud());
@@ -299,6 +300,10 @@ export class GalaxyUI {
 
     if (this.skyboxBtn) {
       this.skyboxBtn.addEventListener('click', () => this.cycleSkybox());
+    }
+
+    if (this.fullscreenBtn) {
+      this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
     }
 
     this.updateSkyboxLabel();
@@ -326,6 +331,34 @@ export class GalaxyUI {
     } else {
       panel.style.display = 'none';
       if (statusLabel) statusLabel.textContent = 'ON';
+    }
+  }
+
+  toggleFullscreen() {
+    const doc = document;
+    const el = document.documentElement;
+
+    const fullscreenElement = doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement;
+
+    if (fullscreenElement) {
+      const exit =
+        doc.exitFullscreen ||
+        doc.webkitExitFullscreen ||
+        doc.msExitFullscreen;
+
+      if (exit) exit.call(doc);
+      return;
+    }
+
+    const request =
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.msRequestFullscreen;
+
+    if (request) {
+      request.call(el);
+    } else {
+      console.warn("Full screen mode is not supported.");
     }
   }
 
@@ -371,5 +404,7 @@ export class GalaxyUI {
   setBloomNode(bloomNode) {
     this.bloomPassNode = bloomNode;
   }
+
+
 }
 
