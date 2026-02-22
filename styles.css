@@ -119,20 +119,14 @@ canvas {
   }
 }
 
-.control-btn:active, #btn-skybox:active {
+.control-btn:active, #btn-skybox:active,
+.fullscreen-btn:hover, .low-gpu-btn:hover {
     scale: 1.04;
     color: #ffffff;
     border: solid 1px #ffffff;
     filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.7));
 }
 
-
-@media (pointer: fine) {
-  .fullscreen-btn:hover {
-    scale: 1.12;
-    filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.7));
-  }
-}
 
 
 @media (max-width: 1000px) {
