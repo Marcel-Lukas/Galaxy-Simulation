@@ -13,7 +13,7 @@ const config = {
   mouseForce: 6.0,
   mouseRadius: 5.0,
   galaxyRadius: 13.0,
-  galaxyThickness: 6,
+  galaxyThickness: 3.5,
   armCount: 2,
   armWidth: 2.25,
   randomness: 1.8,
@@ -120,7 +120,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(16.976, 7.076, -5.471);
+camera.position.set(15.818, 8.585, -5.404);
 camera.lookAt(0, 0, 0);
 
 // ######
@@ -148,9 +148,9 @@ document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
-controls.minDistance = 5;
-controls.maxDistance = 30;
-controls.target.set(0, -5, 0);
+controls.minDistance = 0;
+controls.maxDistance = 50;
+controls.target.set(0, -4, 0);
 
 
 /* ===========================
