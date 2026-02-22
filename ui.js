@@ -338,7 +338,10 @@ export class GalaxyUI {
     const doc = document;
     const el = document.documentElement;
 
-    const fullscreenElement = doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement;
+    const fullscreenElement =
+      doc.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.msFullscreenElement;
 
     if (fullscreenElement) {
       const exit =
@@ -350,6 +353,13 @@ export class GalaxyUI {
       return;
     }
 
+    if (this.infoHud) {
+      this.infoHud.style.display = 'none';
+    }
+    if (this.controlPanel) {
+      this.controlPanel.style.display = 'none';
+    }
+
     const request =
       el.requestFullscreen ||
       el.webkitRequestFullscreen ||
@@ -358,7 +368,7 @@ export class GalaxyUI {
     if (request) {
       request.call(el);
     } else {
-      console.warn("Full screen mode is not supported.");
+      console.warn('Full screen mode is not supported.');
     }
   }
 
