@@ -16,8 +16,8 @@ const config = {
   galaxyThickness: 6,
   armCount: 2,
   armWidth: 2.25,
-  randomness: 1.85,
-  particleSize: 0.04,
+  randomness: 1.8,
+  particleSize: 0.06,
   starBrightness: 0.3,
   denseStarColor: '#1885ff',
   sparseStarColor: '#ffb28a',
@@ -39,13 +39,12 @@ const STARCOUNT_STORAGE_KEY = 'galaxy.starCount';
   const raw = sessionStorage.getItem(STARCOUNT_STORAGE_KEY);
   const parsed = raw != null ? Number(raw) : NaN;
   if (Number.isFinite(parsed)) {
-    // keep within UI limits and align with step=1000
     const clamped = Math.min(1_000_000, Math.max(1000, Math.round(parsed / 1000) * 1000));
     config.starCount = clamped;
   }
 }
 
-let backgroundStars = 7777;
+let backgroundStars = 2222;
 
 // --- Scene Setup ---
 const scene = new THREE.Scene();
@@ -121,8 +120,20 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 12, 17);
+camera.position.set(16.976, 7.076, -5.471);
 camera.lookAt(0, 0, 0);
+
+// ######
+// --- CAMERA Position Helper ---
+// const CAMERA_LOG_INTERVAL_MS = 3000;
+
+// setInterval(() => {
+//   const { x, y, z } = camera.position;
+//   console.log(
+//     `camera.position.set(${x.toFixed(3)}, ${y.toFixed(3)}, ${z.toFixed(3)});`
+//   );
+// }, CAMERA_LOG_INTERVAL_MS);
+// ######
 
 const renderer = new THREE.WebGPURenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -139,7 +150,7 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.minDistance = 5;
 controls.maxDistance = 30;
-controls.target.set(0, -2, 0);
+controls.target.set(0, -5, 0);
 
 
 /* ===========================
