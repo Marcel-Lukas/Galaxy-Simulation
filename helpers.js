@@ -16,6 +16,7 @@ import {
   fract
 } from 'three/tsl';
 
+
 // ==============================================================================
 // RANDOM NUMBER GENERATION
 // ==============================================================================
@@ -33,6 +34,7 @@ export const hash = Fn(([seed]) => {
   const x = fract(h.mul(h.add(47.43)).mul(p));
   return x;
 });
+
 
 // ==============================================================================
 // ROTATION & PHYSICS
@@ -60,6 +62,7 @@ export const rotateXZ = Fn(([position, angle]) => {
   return vec3(newX, position.y, newZ);
 });
 
+
 /**
  * Applies differential rotation based on distance from center
  * Inner regions rotate faster than outer regions (like a real galaxy)
@@ -82,6 +85,7 @@ export const applyDifferentialRotation = Fn(([position, rotationSpeed, deltaTime
 
   return rotateXZ(position, angularSpeed);
 });
+
 
 /**
  * Calculates mouse interaction force
@@ -112,6 +116,7 @@ export const applyMouseForce = Fn(([position, mouse, mouseActive, mouseForce, mo
   return mouseDir.mul(mouseForce).mul(mouseInfluence).mul(deltaTime).negate();
 });
 
+
 /**
  * Applies spring force to restore particle to original position
  * Uses Hooke's law: F = k * (target - current)
@@ -126,4 +131,7 @@ export const applySpringForce = Fn(([currentPos, targetPos, strength, deltaTime]
   const toTarget = targetPos.sub(currentPos);
   return toTarget.mul(strength).mul(deltaTime);
 });
+
+
+
 
