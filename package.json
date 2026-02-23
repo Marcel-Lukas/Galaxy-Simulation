@@ -1,18 +1,18 @@
 {
-  "name": "webgpu-galaxy",
-  "version": "1.0.0",
+  "name": "galaxy-simulation",
+  "version": "1.1.0",
   "type": "module",
-  "description": "GPU Galaxy Simulation using WebGPU and Three.js",
+  "description": "Galaxy Simulation using WebGPU and Three.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "three": "^0.181.1",
+    "three": "^0.181.2",
     "tweakpane": "^4.0.1"
   },
   "devDependencies": {
-    "vite": "^5.0.0"
+    "vite": "^7.3.1"
   }
 }

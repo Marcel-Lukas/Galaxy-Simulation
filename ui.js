@@ -289,6 +289,8 @@ export class GalaxyUI {
     this.skyboxBtn = document.getElementById('btn-skybox');
     this.skyboxLabel = document.querySelector('.skybox');
     this.fullscreenBtn = document.getElementById('btn-fullscreen');
+    this.muteBtn = document.getElementById('mute-music');
+    this.initFullscreenMusic();
 
     if (this.infoHudBtn) {
       this.infoHudBtn.addEventListener('click', () => this.toggleInfoHud());
@@ -304,6 +306,10 @@ export class GalaxyUI {
 
     if (this.fullscreenBtn) {
       this.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+    }
+
+    if (this.muteBtn) {
+      this.muteBtn.addEventListener('click', () => this.toggleMuteMusic());
     }
 
     this.updateSkyboxLabel();
@@ -372,13 +378,98 @@ export class GalaxyUI {
     }
   }
 
+  toggleMuteMusic() {
+    if (!this.musicAudio || !this.music) return;
+
+    if (this.musicAudio.paused) {
+      this.music.userPaused = false;
+      this.tryPlayMusic();
+    } else {
+      this.music.userPaused = true;
+      this.musicAudio.pause();
+    }
+    this.updateMuteButton();
+  }
+
+  updateMuteButton() {
+    if (!this.muteBtn) return;
+    this.muteBtn.textContent = this.musicAudio.paused ? '🔇' : '🔊';
+  }
+
+  async tryPlayMusic() {
+    if (!this.musicAudio || !this.music) return;
+    if (this.music.enabled === false) return;
+    if (this.music.userPaused) return;
+
+    try {
+      await this.musicAudio.play();
+    } catch (err) {
+      console.warn('Music could not start:', err);
+    } finally {
+      this.updateMuteButton();
+    }
+  }
+
+
+  /* ===========================
+     Musik im Fullscreen-Modus
+  ============================ */
+
+  initFullscreenMusic() {
+    this.music = {
+      enabled: true,
+      userPaused: true,
+      volume: 0.5,
+      src: '/sounds/bgm.mp3',
+    };
+
+    this.musicAudio = new Audio(this.music.src);
+    this.musicAudio.loop = true;
+    this.musicAudio.preload = 'auto';
+    this.musicAudio.volume = this.music.volume;
+
+    const onFsChange = () => this.syncMusicWithFullscreen();
+    document.addEventListener('fullscreenchange', onFsChange);
+    document.addEventListener('webkitfullscreenchange', onFsChange);
+    document.addEventListener('msfullscreenchange', onFsChange);
+
+    this.syncMusicWithFullscreen();
+  }
+
+  isFullscreenActive() {
+    const doc = document;
+    return Boolean(
+      doc.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.msFullscreenElement
+    );
+  }
+
+  async syncMusicWithFullscreen() {
+    if (!this.musicAudio) return;
+
+    const fullScreen = this.isFullscreenActive();
+
+    if (!this.music.enabled) {
+      this.musicAudio.pause();
+      return;
+    }
+
+    if (fullScreen) {
+      try {
+        await this.musicAudio.play();
+      } catch (err) {
+        console.warn('Music could not start:', err);
+      }
+    }
+  }
+
 
   /* ===========================
      SKYBOX LOGIC
   ============================ */
   /**
    * Wechselt zyklisch zur nächsten Skybox
-   * Letzte → wieder Erste
    */
   cycleSkybox() {
     if (this.skyboxOrder.length === 0) return;
@@ -393,9 +484,7 @@ export class GalaxyUI {
 
     this.updateSkyboxLabel();
   }
-  /**
-   * Aktualisiert die HTML-Anzeige der Skybox-Nummer (1-basiert)
-   */
+
   updateSkyboxLabel() {
     if (!this.skyboxLabel) return;
     this.skyboxLabel.textContent = String(this.currentSkyboxIndex + 1);
@@ -417,4 +506,3 @@ export class GalaxyUI {
 
 
 }
-
