@@ -5,6 +5,23 @@
   padding: 0;
 }
 
+@font-face {
+    font-family: 'Bricolage Grotesque';
+    src: url('../public/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('woff2-variations');
+    src: url('../public/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('woff2') tech('variations');
+    font-weight: 100 1000;
+    font-stretch: 25% 151%;
+    font-display: swap;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Audiowide';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../public/fonts/audiowide-v22-latin-regular.woff2') format('woff2');
+}
+
 body {
     font-family: 'Courier New', monospace;
     background: #000000;
@@ -61,9 +78,10 @@ canvas {
 
 #info h1 {
     font-size: 20px;
+    font-family: 'Audiowide';
     margin-bottom: 8px;
     color: #88bbff;
-    text-shadow: 1px 1px 10px rgba(136, 187, 255, 0.7);
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
 }
 
 #fps {
@@ -77,10 +95,23 @@ canvas {
 }
 
 .hint {
+    font-family: 'Bricolage Grotesque';
     max-width: 220px;
     margin-top: 10px;
     font-size: 13px;
     text-align: justify;
+}
+
+.mouse-hint {
+  font-family: 'Bricolage Grotesque';
+  text-align: left;
+  margin-top: 2px;
+}
+
+.mouse-hint span {
+  font-weight: bold;
+  text-decoration: underline;
+  line-height: 1.4;
 }
 
 .btn-con {
@@ -165,7 +196,7 @@ canvas {
 
 @media (max-width: 555px) {
   .tp-dfwv {
-    margin-top: 260px;
+    margin-top: 296px;
     margin-left: 14px;
     left: 0;
   }

@@ -350,6 +350,30 @@ async function animate() {
   updateFPS();
 }
 
+// ANIMATION LOOP WITH FPS LIMIT
+// const FPS_LIMIT = 80;
+// const FRAME_INTERVAL = 1000 / FPS_LIMIT;
+// let lastFrameTime = performance.now();
+
+// async function animate() {
+//   requestAnimationFrame(animate);
+//   const currentTime = performance.now();
+//   const deltaTimeMs = currentTime - lastFrameTime;
+//   if (deltaTimeMs < FRAME_INTERVAL) {
+//     return;
+//   }
+//   lastFrameTime = currentTime - (deltaTimeMs % FRAME_INTERVAL);
+//   const deltaTimeSeconds = deltaTimeMs / 1000;
+//   controls.update();
+//   await galaxySimulation.update(renderer, deltaTimeSeconds, mouse3D, mousePressed);
+//   if (postProcessing) {
+//     postProcessing.render();
+//   } else {
+//     renderer.render(scene, camera);
+//   }
+//   updateFPS();
+// }
+
 
 /* ===========================
    RESIZE
