@@ -7,8 +7,8 @@
 
 @font-face {
     font-family: 'Bricolage Grotesque';
-    src: url('../public/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('woff2-variations');
-    src: url('../public/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('woff2') tech('variations');
+    src: url('/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('woff2-variations');
+    src: url('/fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('woff2') tech('variations');
     font-weight: 100 1000;
     font-stretch: 25% 151%;
     font-display: swap;
@@ -19,7 +19,7 @@
   font-family: 'Audiowide';
   font-style: normal;
   font-weight: 400;
-  src: url('../public/fonts/audiowide-v22-latin-regular.woff2') format('woff2');
+  src: url('/fonts/audiowide-v22-latin-regular.woff2') format('woff2');
 }
 
 body {
